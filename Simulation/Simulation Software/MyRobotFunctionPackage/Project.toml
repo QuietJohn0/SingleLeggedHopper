@@ -1,0 +1,4 @@
+name = "MyRobotFunctionPackage"
+uuid = "bdfaa67c-7c80-4cd5-9442-a6a2b88b3d58"
+authors = ["QuietJohn0 <88064809+QuietJohn0@users.noreply.github.com>"]
+version = "0.1.0"
