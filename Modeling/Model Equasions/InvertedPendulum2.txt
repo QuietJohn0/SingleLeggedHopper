@@ -1,0 +1,9 @@
+v1 = -p.L1*p.m1*thd1^2*sin(th1) + b1*ẋ;
+v2 = p.L1*p.g*p.m1*sin(th1) + p.c1*thd1;
+
+
+
+m11 = p.M1 + p.m1;
+m12 = p.L1*p.m1*cos(th1);
+m21 = p.L1*p.m1*cos(th1);
+m22 = p.I1 + p.L1^2*p.m1;

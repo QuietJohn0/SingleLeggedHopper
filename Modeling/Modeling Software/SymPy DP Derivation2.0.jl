@@ -63,7 +63,13 @@ B = M*[θ̈₁(t); θ̈₂(t); ẍ(t); ÿ(t)]
 u = [τ₁; τ₂; 0; 0]
 V = simplify.(expand.(EL-B+u))
 
-open("eqns.txt", "w") do file
+## Change the current working directory to the desired folder
+parent_path = joinpath(@__DIR__, "..")
+desired_folder_path = joinpath(parent_path, "Model Equasions")
+cd(desired_folder_path)
+
+## Write the equations to a text file
+open("Flight.txt", "w") do file
     write(file, "")
 end
 
@@ -75,14 +81,14 @@ for i in 1:length(V)
     Vi = replace(Vi,"θ₁" => "u[1]", "θ₂" => "u[2]", "θ̇₁" => "u[5]", "θ̇₂" => "u[6]", "x" => "u[3]", "ẋ" => "u[7]", "y" => "u[4]", "ẏ" => "u[8]")
     Vi = replace(Vi, "s.u" => "u", r"s.(\w+)\(" => s"\1(")
     
-    open("eqns.txt", "a") do file
+    open("Flight.txt", "a") do file
         write(file, "v" * string(i) * " = " * Vi * "\n")
     end    
     
     global Vs = push!(Vs,Vi)
 end
 
-open("eqns.txt", "a") do file
+open("Flight.txt", "a") do file
     write(file, "\n\n\n")
 end  
 
@@ -96,7 +102,7 @@ for i in 1:length(M[:,1])
         Mij = replace(Mij,"θ₁" => "u[1]", "θ₂" => "u[2]", "θ̇₁" => "u[5]", "θ̇₂" => "u[6]", "x" => "u[3]", "ẋ" => "u[7]", "y" => "u[4]", "ẏ" => "u[8]")
         Mij = replace(Mij, "s.u" => "u", r"s.(\w+)\(" => s"\1(")
         
-        open("eqns.txt", "a") do file
+        open("Flight.txt", "a") do file
             write(file, "m" * string(i) * string(j) * " = " * Mij * "\n")
         end
 

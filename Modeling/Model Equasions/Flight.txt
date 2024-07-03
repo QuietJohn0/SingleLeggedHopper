@@ -1,0 +1,23 @@
+v1 = s.L₁*s.g*s.m₁*sin(u[1]) - 2*s.L₂*s.Lₐ*s.m₂*u[5]*u[6]*sin(u[2]) - s.L₂*s.Lₐ*s.m₂*u[6]^2*sin(u[2]) + s.L₂*s.g*s.m₂*sin(u[1] + u[2]) + s.Lₐ*s.g*s.m₂*sin(u[1]) + s.c₁*u[5]
+v2 = s.L₂*s.Lₐ*s.m₂*u[5]^2*sin(u[2]) + s.L₂*s.g*s.m₂*sin(u[1] + u[2]) + s.c₂*u[6]
+v3 = -s.L₁*s.m₁*u[5]^2*sin(u[1]) - s.L₂*s.m₂*u[5]^2*sin(u[1] + u[2]) - 2*s.L₂*s.m₂*u[5]*u[6]*sin(u[1] + u[2]) - s.L₂*s.m₂*u[6]^2*sin(u[1] + u[2]) - s.Lₐ*s.m₂*u[5]^2*sin(u[1])
+v4 = s.L₁*s.m₁*u[5]^2*cos(u[1]) + s.L₂*s.m₂*u[5]^2*cos(u[1] + u[2]) + 2*s.L₂*s.m₂*u[5]*u[6]*cos(u[1] + u[2]) + s.L₂*s.m₂*u[6]^2*cos(u[1] + u[2]) + s.Lₐ*s.m₂*u[5]^2*cos(u[1]) + s.g*s.m₀ + s.g*s.m₁ + s.g*s.m₂
+
+
+
+m11 = s.I₁ + s.I₂ + s.L₁^2*s.m₁ + s.L₂^2*s.m₂ + 2*s.L₂*s.Lₐ*s.m₂*cos(u[2]) + s.Lₐ^2*s.m₂
+m12 = s.I₂ + s.L₂^2*s.m₂ + s.L₂*s.Lₐ*s.m₂*cos(u[2])
+m13 = s.L₁*s.m₁*cos(u[1]) + s.L₂*s.m₂*cos(u[1] + u[2]) + s.Lₐ*s.m₂*cos(u[1])
+m14 = s.L₁*s.m₁*sin(u[1]) + s.L₂*s.m₂*sin(u[1] + u[2]) + s.Lₐ*s.m₂*sin(u[1])
+m21 = s.I₂ + s.L₂^2*s.m₂ + s.L₂*s.Lₐ*s.m₂*cos(u[2])
+m22 = s.I₂ + s.L₂^2*s.m₂
+m23 = s.L₂*s.m₂*cos(u[1] + u[2])
+m24 = s.L₂*s.m₂*sin(u[1] + u[2])
+m31 = s.L₁*s.m₁*cos(u[1]) + s.L₂*s.m₂*cos(u[1] + u[2]) + s.Lₐ*s.m₂*cos(u[1])
+m32 = s.L₂*s.m₂*cos(u[1] + u[2])
+m33 = s.m₀ + s.m₁ + s.m₂
+m34 = 0
+m41 = s.L₁*s.m₁*sin(u[1]) + s.L₂*s.m₂*sin(u[1] + u[2]) + s.Lₐ*s.m₂*sin(u[1])
+m42 = s.L₂*s.m₂*sin(u[1] + u[2])
+m43 = 0
+m44 = s.m₀ + s.m₁ + s.m₂

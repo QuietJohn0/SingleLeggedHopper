@@ -66,8 +66,13 @@ B = M*[θ̈₁(t); θ̈₂(t); ẍₛ(t); ÿₛ(t)]
 u = [τ₁; τ₂; 0; 0]
 V = simplify.(expand.(EL-B+u))
 
-## Write new equations to file
-open("eqns.txt", "w") do file
+## Change the current working directory to the desired folder
+parent_path = joinpath(@__DIR__, "..")
+desired_folder_path = joinpath(parent_path, "Model Equasions")
+cd(desired_folder_path)
+
+## Write the equations to a text file
+open("Stance.txt", "w") do file
     write(file, "")
 end
 
@@ -80,13 +85,13 @@ for i in 1:length(V)
     Vi = replace(Vi,"θ₁" => "u[1]", "θ₂" => "u[2]", "xₛ" => "u[3]", "yₛ" => "u[4]", "θ̇₁" => "u[5]", "θ̇₂" => "u[6]", "ẋₛ" => "u[7]", "ẏₛ" => "u[8]")
     Vi = replace(Vi, "p.u" => "u", r"p.(\w+)\(" => s"\1(")
     
-    open("eqns.txt", "a") do file
+    open("Stance.txt", "a") do file
         write(file, "v" * string(i) * " = " * Vi * "\n")
     end    
     global Vs = push!(Vs,Vi)
 end
 
-open("eqns.txt", "a") do file
+open("Stance.txt", "a") do file
     write(file, "\n\n\n")
 end  
 
@@ -101,7 +106,7 @@ for i in 1:length(M[:,1])
         Mij = replace(Mij,"θ₁" => "u[1]", "θ₂" => "u[2]", "xₛ" => "u[3]", "yₛ" => "u[4]", "θ̇₁" => "u[5]", "θ̇₂" => "u[6]", "ẋₛ" => "u[7]", "ẏₛ" => "u[8]")
         Mij = replace(Mij, "p.u" => "u", r"p.(\w+)\(" => s"\1(")
         
-        open("eqns.txt", "a") do file
+        open("Stance.txt", "a") do file
             write(file, "m" * string(i) * string(j) * " = " * Mij * "\n")
         end
         Mis = push!(Mis,Mij)         

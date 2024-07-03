@@ -1,4 +1,4 @@
-############## Stance Phase ####################
+############## Inverted Pendulum ####################
 
 using SymPy
 
@@ -54,7 +54,13 @@ F = [Fₓ; 0]
 V = simplify.(expand.(EL-B+F))
 
 
-open("eqns.txt", "w") do file
+## Change the current working directory to the desired folder
+parent_path = joinpath(@__DIR__, "..")
+desired_folder_path = joinpath(parent_path, "Model Equasions")
+cd(desired_folder_path)
+
+## Write the equations to a text file
+open("InvertedPendulum1.txt", "w") do file
     write(file, "")
 end
 
@@ -67,14 +73,14 @@ for i in 1:length(V)
 #    Vi = replace(Vi,"x" => "x", "θ₁" => "th1", "θ₂" => "th2", "θ₃" => "th3")
 #    Vi = replace(Vi, "p.u" => "u", r"p.(\w+)\(" => s"\1(")
     
-    open("eqns.txt", "a") do file
+    open("InvertedPendulum1.txt", "a") do file
         write(file, "v" * string(i) * " = " * Vi * ";\n")
     end    
     
     global Vs = push!(Vs,Vi)
 end
 
-open("eqns.txt", "a") do file
+open("InvertedPendulum1.txt", "a") do file
     write(file, "\n\n\n")
 end  
 
@@ -89,7 +95,7 @@ for i in 1:length(M[:,1])
 #        Mij = replace(Mij,"x" => "x", "θ₁" => "th1", "θ₂" => "th2", "θ₃" => "th3")
 #        Mij = replace(Mij, "p.u" => "u", r"p.(\w+)\(" => s"\1(")
         
-        open("eqns.txt", "a") do file
+        open("InvertedPendulum1.txt", "a") do file
             write(file, "m" * string(i) * string(j) * " = " * Mij * ";\n")
         end
 
@@ -105,7 +111,7 @@ end
 
 
 
-open("eqns1.txt", "w") do file
+open("InvertedPendulum2.txt", "w") do file
     write(file, "")
 end
 
@@ -118,14 +124,14 @@ for i in 1:length(V)
     Vi = replace(Vi,"x" => "x", "θ₁" => "th1", "θ₂" => "th2", "θ₃" => "th3")
     Vi = replace(Vi, "p.u" => "u", r"p.(\w+)\(" => s"\1(")
     
-    open("eqns1.txt", "a") do file
+    open("InvertedPendulum2.txt", "a") do file
         write(file, "v" * string(i) * " = " * Vi * ";\n")
     end    
     
     global Vs = push!(Vs,Vi)
 end
 
-open("eqns1.txt", "a") do file
+open("InvertedPendulum2.txt", "a") do file
     write(file, "\n\n\n")
 end  
 
@@ -140,7 +146,7 @@ for i in 1:length(M[:,1])
         Mij = replace(Mij,"x" => "x", "θ₁" => "th1", "θ₂" => "th2", "θ₃" => "th3")
         Mij = replace(Mij, "p.u" => "u", r"p.(\w+)\(" => s"\1(")
         
-        open("eqns1.txt", "a") do file
+        open("InvertedPendulum2.txt", "a") do file
             write(file, "m" * string(i) * string(j) * " = " * Mij * ";\n")
         end
 
