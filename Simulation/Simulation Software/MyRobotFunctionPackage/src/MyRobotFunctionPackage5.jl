@@ -773,8 +773,11 @@ using DataFrames
                         Vxhipd=[p.Vxhipd, missing], θ_liftOff=[p.θ_liftOff, missing],offset=[p.offset, missing])
         df3 = DataFrame(m₀=p.m₀,m₁=p.m₁,m₂=p.m₂,Lₐ=p.Lₐ,Lᵦ=p.Lᵦ,L₁=p.L₁,L₂=p.L₂,I₁=p.I₁,I₂=p.I₂,c₁=p.c₁,c₂=p.c₂,kₛₓ=p.kₛₓ,cₛₓ=p.cₛₓ,kₛ=p.kₛ,cₛ=p.cₛ,g=p.g)
 
-        # Change directory where the data will be saved
-        cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\JavaVS-code\\CodeToTellAStory\\simulationData")
+        # Change the current working directory to the desired folder
+        desired_path = joinpath(@__DIR__, "..\\..\\..\\Simulation Datasets")
+        cd(desired_path)
+
+        # Get the list of files in the directory and increment the file number
         a = readdir()
         num = length(a)+1
 
@@ -786,9 +789,14 @@ using DataFrames
         )
     end
     function ImportData()
-        cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\JavaVS-code\\CodeToTellAStory\\simulationData")
+        # Change the current working directory to the desired folder
+        desired_path = joinpath(@__DIR__, "..\\..\\..\\Simulation Datasets")
+        cd(desired_path)
+
+        # Get the list of files in the directory
         a = readdir()
         filename = a[end]
+
         # Open the Excel file
         ImportData(filename)
     end
@@ -828,9 +836,14 @@ using DataFrames
         (t_all,u_all,p,filename)
     end
     function ImportExpData(HopNum)
-        cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\MATtierLAB\\MATtierLAB\\LeggedRobotGithub\\LeggedRobot\\ExperimantalData")
+        # Change the current working directory to the desired folder
+        desired_path = joinpath(@__DIR__, "..\\..\\..\\Simulation Datasets")
+        cd(desired_path)
+        
+        # Get the list of files in the directory
         a = readdir()
         a = [s for s in a if occursin(".xlsx", s)]
+
         # Open the Excel file
         ImportExpData(select_item_from_array(a),HopNum)
     end
