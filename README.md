@@ -20,7 +20,7 @@ Link to the relevant files and documentation for the simulation section.
 - [Simulation Code](path/to/simulation_code)
 - [Simulation Documentation](path/to/simulation_documentation)
 
-Include an image or animation that illustrates the simulation results or process.
+Include an image or animation that illustrates the simulation results or process .
 ![Simulation Animation](path/to/simulation_animation.gif)
 
 ## Experimental Testing
