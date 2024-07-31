@@ -1,7 +1,7 @@
 # Modeling, Simulation, and Experimental Testing of a Single-legged Hopper
-The following repository contains the MATLAB and Simulink files that establish an accurate mathematical model for a vertical hopping robot.Modeling, Simulation, and Experimental Testing of a Single-legged Hopper
+The following repository contains the Julia and Simulink files used in developing a physical single-legged forward hopper. The details in developing stable hopping for the single leg begins with modeling the dynamics, then simulation to develop a controller, and finally experimental testing to implement what was learned from the simulation and modeling to achieve stable forward hopping.
 
-[![Testing Sim2](Simulation/Animations/Bounding_Simulation2.gif)]
+![Testing Sim2](Simulation/Animations/Bounding_Simulation2.gif)
 
 ## Modeling
 Detail the modeling aspect of your project. Describe the methods, tools, and processes you used to develop the model.
@@ -12,6 +12,7 @@ Link to the relevant files and documentation for the modeling section.
 - [Modeling Inverted Pendulum](Modeling/Modeling%20Software/Inverted%20Pendulum%20Derivation.jl)
 - [Modeling Triple Inverted Pendulum](Modeling/Modeling%20Software/SymPy%20Triple%20Pendulum%20Derivation.jl)
 
+Link to Modeling 
 Include an image or animation that visually represents your model.
 ![Modeling Animation](path/to/modeling_animation.gif)
 
