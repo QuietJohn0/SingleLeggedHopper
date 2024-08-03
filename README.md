@@ -48,8 +48,10 @@ Simulation Analysis Files
 - [Modeling Triple Inverted Pendulum](Modeling/Modeling%20Software/SymPy%20Triple%20Pendulum%20Derivation.jl)
 
 <p align="center">
-  <img src="Simulation/SimPlots/HipPosition_Trans.png">
+  <img width="600" height="400" src="Simulation/SimPlots/HipPosition_Trans.png">
 </p>
+
+
 
 **<p align= "center">Hip Position Transiant Response</p>**
 
