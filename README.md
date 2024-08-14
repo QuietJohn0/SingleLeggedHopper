@@ -6,27 +6,27 @@ The following repository contains the Julia and Simulink files used in developin
 </p>
 
 ## Modeling
-A generic modeling method utilizing the Euler-Lagrange method derives the equations of motion in julia and saves the results to text files. This method is used to derive a variety of energy based systems. To establishe a symbolic mathematical model for the single leg's dynamics, The model of the leg is defined in two parts: the dynamics of flight and the dynamics of stance. 
+A generic modeling method utilizing the Euler-Lagrange method derives the equations of motion in julia and saves the results to text files. This method is used to derive a variety of energy based systems. To establish a symbolic mathematical model for the single leg's dynamics, The model of the leg is defined in two parts: the dynamics of flight and the dynamics of stance. 
 
-Links to Julia derevation code.
+Links to Julia derivation code.
 - [Modeling Flight](Modeling/Modeling%20Software/SymPy%20DP%20Derivation2.0.jl)
 - [Modeling Stance](Modeling/Modeling%20Software/SymPy%20DP%20Ground%20wSensor%20Derivation3.0.jl)
 - [Modeling Inverted Pendulum](Modeling/Modeling%20Software/Inverted%20Pendulum%20Derivation.jl)
 - [Modeling Triple Inverted Pendulum](Modeling/Modeling%20Software/SymPy%20Triple%20Pendulum%20Derivation.jl)
 
-Links to derevation text files. The Equasions are written to be easily copied and pasted into code.
-- [Flight Equasion](Modeling/Model%20Equasions/Flight.txt) for Julia
-- [Stance Equasion](Modeling/Model%20Equasions/Stance.txt) for Julia
-- Inverted Pendulum Equasion
+Links to derivation text files. The Equations are written to be easily copied and pasted into code.
+- [Flight Equation](Modeling/Model%20Equasions/Flight.txt) for Julia
+- [Stance Equation](Modeling/Model%20Equasions/Stance.txt) for Julia
+- Inverted Pendulum Equation
   - [Generic Form](Modeling/Model%20Equasions/InvertedPendulum1.txt)
   - [For Matlab](Modeling/Model%20Equasions/InvertedPendulum2.txt)
-- Triple Inverted Pendulum Equasion
+- Triple Inverted Pendulum Equation
   - [Generic Form](Modeling/Model%20Equasions/TripleInvertedPendulum1.txt)
   - [For Matlab](Modeling/Model%20Equasions/TripleInvertedPendulum2.txt)
 
 
 ## Simulation
-Simulation defines the control methodology for achieving single leg forward hopping. From analyzing the results the controller's performance is optiomized to achieve the desired preformance. The code is brocken into three parts: a function file containing all necessary functions for control and analysis, simulation files, and analysis files.
+Simulation defines the control methodology for achieving single leg forward hopping. From analyzing the results the controller's performance is optimized to achieve the desired performance. The code is broken into three parts: a function file containing all necessary functions for control and analysis, simulation files, and analysis files.
 
 [Function File](Simulation/Simulation%20Software/MyRobotFunctionPackage/src/MyRobotFunctionPackage5.jl)
 
@@ -34,6 +34,9 @@ Simulation Code
 - [Combined](Simulation/Simulation%20Software/Double%20Pendulum%20Combined9.0.jl): This Simulates the total response of the leg in both phases repeatedly
 - [Flight](Simulation/Simulation%20Software/Flight%20Double%20Pendulum%208.0.jl): Simulates just during flight
 - [Stance](Simulation/Simulation%20Software/Stance%20Double%20Pendulum%208.0.jl): Simulates just during stance
+- Parameter Sweep: Simulates multiple “Combined” simulations with an array of values for key parameters. Used in achieving a desired performance and graphing the result of changing inputs
+  - [Tuning Px](Simulation/Simulation%20Software/Double%20Pendulum%20Goal%20Tuning%20Px%201.0.jl)
+  - [Tuning α](Simulation/Simulation%20Software/Double%20Pendulum%20Goal%20Tuning%20Offset%201.0.jl)
 
 <p align="center">
   <img src="Simulation/Animations/Bounding_Simulation.gif">
@@ -42,10 +45,12 @@ Simulation Code
 **<p align= "center">Animation of the Combined Simulation</p>**
 
 Simulation Analysis Files
-- [Modeling Flight](Modeling/Modeling%20Software/SymPy%20DP%20Derivation2.0.jl)
-- [Modeling Stance](Modeling/Modeling%20Software/SymPy%20DP%20Ground%20wSensor%20Derivation3.0.jl)
-- [Modeling Inverted Pendulum](Modeling/Modeling%20Software/Inverted%20Pendulum%20Derivation.jl)
-- [Modeling Triple Inverted Pendulum](Modeling/Modeling%20Software/SymPy%20Triple%20Pendulum%20Derivation.jl)
+- Plotting: Uses simulation data to plot key variables during a simulation.
+  - [Plot eps](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20Plotter%206.0.jl)
+  - [Plot png](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20Plotter%207.0.jl)
+- [Create Animation](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20Animator%202.0.jl): Uses simulation data to visualize system performance
+  - [Overlay Animations](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20Animator%203.0.jl): Uses multiple datasets to compare several systems performance
+- [Parameter Sweep Plot](Simulation/Simulation%20Software/Sim%20Goal%20XLSX%20Plotter%201.0.jl): Using data from the parameter sweep simulation a plot can be created comparing a parameter and the resulting horizontal speed.
 
 <p align="center">
   <img width="600" height="400" src="Simulation/SimPlots/HipPosition_Trans.png">
@@ -53,7 +58,7 @@ Simulation Analysis Files
 
 
 
-**<p align= "center">Hip Position Transiant Response</p>**
+**<p align= "center">Hip Position Transient Response</p>**
 
 
 ## Experimental Testing
@@ -65,3 +70,6 @@ Link to the relevant files and documentation for the experimental testing sectio
 
 Include an image or animation related to the experimental testing.
 ![Experimental Testing Image](path/to/experimental_testing_image.jpg)
+
+
+
