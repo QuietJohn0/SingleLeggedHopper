@@ -1,10 +1,13 @@
 ################## Double Pendulum Combined 9.0 ##################
 
 ################### Imported Librarys ###################
-Path_name = "/Users/johna/OneDrive - Cal Poly/Documents/JULIACODE/MyRobotFunctionPackage/src"
+## Change the current working directory to the desired folder
+Path_name = joinpath(@__DIR__, "MyRobotFunctionPackage/src")
 if !(Path_name in LOAD_PATH)
     push!(LOAD_PATH, Path_name)
 end
+
+include(joinpath(Path_name, "MyRobotFunctionPackage5.jl"))
 import .MyRobotFunctionPackage5 as MF5
 using DifferentialEquations
 
