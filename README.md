@@ -56,20 +56,32 @@ Simulation Analysis Files
   <img width="600" height="400" src="Simulation/SimPlots/HipPosition_Trans.png">
 </p>
 
-
-
-**<p align= "center">Hip Position Transient Response</p>**
+**<p align= "center">Simulation Hip Position Transient Response</p>**
 
 
 ## Experimental Testing
-Describe the experimental testing procedures, including the setup, methodology, and equipment used. Highlight key results and findings.
+The experimental testing implements the mathematical model and simulations into controlling a real-world hopping robot leg. The software architecture is built in Simulink and runs on the Speedgoat. This enables real-time data exchange between the hardware and Simulink controller. After a test is performed Simulink allows easy data exporting to excel.
 
-Link to the relevant files and documentation for the experimental testing section.
-- [Experimental Testing Code](path/to/experimental_testing_code)
-- [Experimental Testing Documentation](path/to/experimental_testing_documentation)
+Experimental Software
+- [Encoder Testing Code](Experimental%20Testing/Experimental%20Software/EncoderTest01.slx): Operate just the encoders. Good for testing and calibrating.
+- [Stabilize Tuning Software](Experimental%20Testing/Experimental%20Software/PlanerizerTest09_Flight_Stance.slx): Experimental software used in the majority of the testing.
+- [Hop-speed Tuning Software](Experimental%20Testing/Experimental%20Software/PlanerizerTest12_Flight_Stance.slx): The most up to date version of the experimental software. Used in performing many tests while being able to tune key parameters for adjusting hop speed.
 
-Include an image or animation related to the experimental testing.
-![Experimental Testing Image](path/to/experimental_testing_image.jpg)
+<p align="center">
+  <img src="Experimental%20Testing/Experimental%20Videos/ExpHoppingSlow.gif">
+</p>
+
+Experimental Data Analysis
+- [Experimental Plotting](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20EXP%20Plotter%202.0.jl): Uses experimental data to plot key variables during a simulation.
+- [Parameter Sweep Plot](Simulation/Simulation%20Software/Sim%20Goal%20XLSX%20Plotter%201.0.jl): Same parameter sweep code as the simulation but uses experimental data.
+
+<p align="center">
+  <img width="600" height="400" src="Experimental%20Testing/ExpPlots/HipPosition_Trans.png">
+</p>
+
+**<p align= "center">Experimental Hip Position Transient Response</p>**
+
+
 
 
 
