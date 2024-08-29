@@ -1,11 +1,12 @@
 ################## Double Pendulum Goal Tuning Offset 1.0 ##################
 
 ################### Imported Librarys ###################
-Path_name = "/Users/johna/OneDrive - Cal Poly/Documents/JULIACODE/MyRobotFunctionPackage/src"
+## Change the current working directory to the desired folder
+Path_name = joinpath(@__DIR__, "MyRobotFunctionPackage/src")
 if !(Path_name in LOAD_PATH)
     push!(LOAD_PATH, Path_name)
 end
-import .MyRobotFunctionPackage5 as MF5
+include(joinpath(Path_name, "MyRobotFunctionPackage5.jl"))
 using DifferentialEquations
 using XLSX
 using DataFrames
@@ -105,8 +106,10 @@ end
 
 df1 = DataFrame(offset = output[1,:], Vxhipd = output[2,:], VAvg = output[3,:])
 
-cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\JavaVS-code\\CodeToTellAStory\\simulationData")
+parent_path = joinpath(@__DIR__, "..")
+desired_folder_path = joinpath(parent_path, "Simulation Datasets")
+cd(desired_folder_path)
 
-XLSX.writetable("Goal_Offset_output.xlsx", overwrite=true, 
+XLSX.writetable("Goal_Offset_output_Sim.xlsx", overwrite=true, 
     GOAL_DATA=(collect(DataFrames.eachcol(df1)), DataFrames.names(df1)),
 )

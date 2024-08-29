@@ -30,7 +30,7 @@ Sizeleagend = 20
 # Read the Excel file
 parent_path = joinpath(@__DIR__, "..")
 desired_folder_path = joinpath(parent_path, "Simulation Datasets")
-xf = XLSX.readxlsx(joinpath(desired_folder_path, "Goal_Offset_output_Sim.xlsx"))
+xf = XLSX.readxlsx(joinpath(desired_folder_path, "Goal_Offset_output.xlsx"))
 
 # Get the sheet names
 sheerNames = XLSX.sheetnames(xf)
@@ -88,7 +88,7 @@ symbols = [:cross, :square, :diamond, :utriangle, :dtriangle]
 for (i, (vx, data)) in enumerate(data_sets)
     offset, vavg = data
     
-    if length(vavg) >= 3
+    if length(vavg) >= 1
         # Create scatter plot with specified markersize, color, and marker symbol
         scatter_plot = Makie.scatter!(ax, offset, vavg, markersize = 15, color = :black, marker = symbols[i])
         
@@ -105,9 +105,10 @@ axislegend(ax, scatter_plots, legend_names, position = :rb, labelsize = Sizeleag
 sp
 
 # Change current directory to the specified path
-parent_path = joinpath(@__DIR__, "..")
-plot_folder_path = joinpath(parent_path, "SimPlots")
+parent_path = joinpath(@__DIR__, "..\\..")
+plot_folder_path = joinpath(parent_path, "Experimental Testing\\ExpPlots")
 cd(plot_folder_path)
+
 
 
 
@@ -115,7 +116,7 @@ cd(plot_folder_path)
 
 ### Plotting Goal Px Data ###
 # Read the Excel file
-xf = XLSX.readxlsx(joinpath(desired_folder_path, "Goal_Px_output_Sim.xlsx"))
+xf = XLSX.readxlsx(joinpath(desired_folder_path, "Goal_Px_output.xlsx"))
 
 # Get the sheet names
 sheerNames = XLSX.sheetnames(xf)
@@ -168,7 +169,7 @@ symbols = [:cross, :square, :diamond, :utriangle, :dtriangle]
 for (i, (vx, data)) in enumerate(data_sets)
     px, vavg = data
     
-    if length(vavg) >= 3
+    if length(vavg) >= 1
         # Create scatter plot with specified markersize, color, and marker symbol
         scatter_plot = Makie.scatter!(ax, px, vavg, markersize = 15, color = :black, marker = symbols[i])
         
@@ -181,7 +182,7 @@ for (i, (vx, data)) in enumerate(data_sets)
 end
 
 # Add legend to the plot with specified position
-axislegend(ax, scatter_plots, legend_names, position = :rb, labelsize = Sizeleagend, labelfont = "Times")
+axislegend(ax, scatter_plots, legend_names, position = :lt, labelsize = Sizeleagend, labelfont = "Times")
 
 
 sp
