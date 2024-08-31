@@ -1,21 +1,22 @@
 ################## Double Pendulum XLSX Plotter 7.0 ##################
 
 ################### Imported Librarys ###################
-Path_name = "/Users/johna/OneDrive - Cal Poly/Documents/JULIACODE/MyRobotFunctionPackage/src"
+## Change the current working directory to the desired folder
+Path_name = joinpath(@__DIR__, "MyRobotFunctionPackage/src")
 if !(Path_name in LOAD_PATH)
     push!(LOAD_PATH, Path_name)
 end
+
+include(joinpath(Path_name, "MyRobotFunctionPackage5.jl"))
 import .MyRobotFunctionPackage5 as MF5
-#using Plots
+
 using Makie
 using GLMakie
 using CairoMakie
 
-
-#using ColorSchemes 
-#using Plots # Get the Viridis color scheme 
-#viridis_colors = ColorSchemes.viridis(10) # Plot using the Viridis color scheme 
-#plot(rand(10), rand(10), color=viridis_colors, seriestype=:scatter)
+# File path to save plots
+parent_path = joinpath(@__DIR__, "..")
+plot_folder_path = joinpath(parent_path, "SimPlots")
 
 ##### State Transition Plots #####
     function PlotSetUp(fig, t_all, u, sw, title, xlab, ylab)
@@ -139,9 +140,9 @@ using CairoMakie
             j = sw[i]
             k = sw[i+1]
             if i%2 == 0
-                lines!(ax, t_all[j:k], u[j:k], color = linecolor, linestyle = style, linewidth = width)                #plot!(t_all[j:k], u[j:k], lc=:black, ls =:dashdot, lw = 1)
+                lines!(ax, t_all[j:k-1], u[j:k-1], color = linecolor, linestyle = style, linewidth = width)                #plot!(t_all[j:k], u[j:k], lc=:black, ls =:dashdot, lw = 1)
             elseif j != k
-                lines!(ax, t_all[j:k], u[j:k], color = linecolor, linestyle = lstyle, linewidth = lwidth)
+                lines!(ax, t_all[j:k-1], u[j:k-1], color = linecolor, linestyle = lstyle, linewidth = lwidth)
                 #plot!(t_all[j:k], u[j:k], lc=:black, ls =:solid, lw = 2)   
             end
         end
@@ -179,7 +180,7 @@ using CairoMakie
             dpi = 900,
             )
     end
-        function PlotTransitionPoints(ux,uy, title,sw)
+    function PlotTransitionPoints(ux,uy, title,sw)
         plot(ux[sw[1]+1:sw[end]], uy[sw[1]+1:sw[end]], title=title, legend=false)
         for i in 1:length(sw)-1
             j = sw[i]+1
@@ -243,16 +244,8 @@ using CairoMakie
         H = MF5.Calculate_Angular_Momentum_All(p,u_all,sw,true)
         sp = Figure(resolution = (900, 600))
         
-        #p1 = PlotTransitionLinesColor(sp[1,1],t_all, H[1,:], swplot, title, "", L"P_x \text{, [N-s]}")
-        #p1 = yticks!([3.4, 3.3, 3.2, 3.1])
-        #p1 = ylims!((3.1,3.4))
-        #p2 = PlotTransitionLinesColor(sp[2,1],t_all, H[2,:], swplot, " ", "", L"P_y \text{, [N-s]}")
-        #p2 = yticks!([1.5, .5, -.5, -1.5])
         p3 = PlotTransitionLinesColor(sp[1,1],t_all, H[3,:], swplot, "", "", L"H_A \text{, [Nms]}")
         p4 = PlotTransitionLinesColor(sp[2,1],t_all, H[4,:], swplot, " ", xlab, L"H_B \text{, [Nms]}")
-        #p4 = yticks!([-.75, -.8, -.85])
-
-        #plot(p1, p2, p3, p4, layout=(4,1),size = (700,500),extra_plot_kwargs = KW(:include_mathjax => "cdn"))
         sp
     end
     function TrimData(sw,Start_Cycle,N_Cycles)
@@ -288,7 +281,7 @@ GRF = (-p.kₛ*u_all[:,10] - p.cₛ*u_all[:,12].*(u_all[:,12].<0)).*(round.(u_al
 # Plotting Parameters
 swplot = TrimData(sw,0,9.5)
 
-cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\JavaVS-code\\CodeToTellAStory\\simulationData\\SimPlots\\")
+cd(plot_folder_path)
 ##### Subplot 1: x, y #####
 sp1 = Figure(resolution = (900, 600))
 PlotTransitionLinesColor(sp1[1,1],t_all, u_all[:,3], swplot, "", "", L"x_0 \text{, [m]}")
@@ -301,7 +294,7 @@ sp2 = Figure(resolution = (900, 600))
 PlotTransitionLinesColor(sp2[1,1],t_all, u_all[:,7], swplot, "" ,""         ,L"\dot{x}_0 \text{, [m/s]}")
 PlotTransitionLinesColor(sp2[2,1],t_all, u_all[:,8], swplot, " ",L"t \text{, [s]}",L"\dot{y}_0 \text{, [m/s]}")
 sp2
-Makie.save("HipVelocity_Trans.eps", sp2)
+Makie.save("HipVelocity_Trans.png", sp2)
 
 ##### Subplot 3: θ₁, θ₃, θ̇₁, θ̇₃ #####
 sp3 = Figure(resolution = (900, 800))
@@ -328,7 +321,8 @@ Makie.save("Torque_Trans.png", sp5)
 ###### Subplot 6/7: CON MOM ######
 sp6 = PlotCycleAngularMomentum(t_all, u_all, sw, p, "", L"t \text{, [s]}", "")
 #sp7 = PlotAngularMomentum(t_all, u_all, swplot, p, "", L"t \text{, [s]}", "")
-Makie.save("AngularMomentumPlot.eps", sp6)
+sp6
+Makie.save("AngularMomentumPlot.png", sp6)
 ##### End Subplot 6/7: CON MOM #####
 
 
@@ -355,7 +349,7 @@ lines!(ax, t, θ̇₃d, color = :red, linewidth = 2, linestyle = :dash)
 TransitionColor!(ax, t_all, u_all[:,6], swflight)
 sp8
 
-Makie.save("Flight_SS.eps", sp8)
+Makie.save("Flight_SS.png", sp8)
 
 ##### Subplot 9/10: Stance #####
 swstance = TrimData(sw,24.5,0)
@@ -379,7 +373,7 @@ ax = PlotSetUp(sp9[4,1], t_all, u_all[:,6], θ̇₃d, swstance, " ",L"t \text{, 
 lines!(ax, t, θ̇₃d, color = :red, linewidth = 2, linestyle = :dash)
 TransitionColor!(ax, t_all, u_all[:,6], swstance, :black, :solid, 2)
 sp9
-Makie.save("Stance_SS.eps", sp9)
+Makie.save("Stance_SS.png", sp9)
 
 sp10 = Figure(resolution = (900, 600))
 swstance[1] = swstance[1] - 1
@@ -414,12 +408,7 @@ sp12 = Figure(resolution = (900, 600))
 PlotTransitionLinesColor(sp12[1,1], t_all, u_all[:,7], swplotss, "" ,""         ,L"\dot{x}_0 \text{, [m/s]}")
 PlotTransitionLinesColor(sp12[2,1], t_all, u_all[:,8], swplotss, " ",L"t \text{, [s]}",L"\dot{y}_0 \text{, [m/s]}")
 sp12
-Makie.save("HipVelocity_SS.eps", sp12)
-
-#p1 = PlotSetUp(t_all, u_all[:,7], p.Vxhipd, swplotss, "" ,""         ,L"\dot{x}_0 \text{, [m/s]}")
-#p1 = PlotVx!(t_all, u_all[:,7], swplotss,p)
-#p1 = TransitionColor!(t_all, u_all[:,7], swplotss)
-
+Makie.save("HipVelocity_SS.png", sp12)
 
 ##### Subplot 13: θ₁, θ₃, θ̇₁, θ̇₃ #####
 sp13 = Figure(resolution = (900, 800))
@@ -428,7 +417,7 @@ PlotTransitionLinesColor(sp13[2,1], t_all, u_all[:,2], swplotss, " ","",L"\theta
 PlotTransitionLinesColor(sp13[3,1], t_all, u_all[:,5], swplotss, " ","",L"\dot{\theta}_1 \text{, [rad/s]}")
 PlotTransitionLinesColor(sp13[4,1], t_all, u_all[:,6], swplotss, " ",L"t \text{, [s]}",L"\dot{\theta}_2 \text{, [rad/s]}")
 sp13
-Makie.save("AngularPosition_SS.eps", sp13)
+Makie.save("AngularPosition_SS.png", sp13)
 
 ##### Subplot 14: GRF #####
 sp14 = Figure(resolution = (900, 600))
@@ -458,7 +447,7 @@ Makie.save("Torque_SS.png", sp15)
     lines!(ax, t, θ̇₁d, color = :black, linestyle =:dashdot, linewidth = 3)
     Makie.scatter!(ax, [t[1], t[end]], [θ̇₁d[1], θ̇₁d[end]], color = :red, markersize = 20)
     sp16
-    Makie.save("TragectoryPlanningExample.eps", sp16)
+    Makie.save("TragectoryPlanningExample.png", sp16)
 ##### Subplot 16: Plotted #####
 
 

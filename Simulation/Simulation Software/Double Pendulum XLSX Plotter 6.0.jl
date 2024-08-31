@@ -1,21 +1,22 @@
 ################## Double Pendulum XLSX Plotter 6.0 ##################
 
 ################### Imported Librarys ###################
-Path_name = "/Users/johna/OneDrive - Cal Poly/Documents/JULIACODE/MyRobotFunctionPackage/src"
+## Change the current working directory to the desired folder
+Path_name = joinpath(@__DIR__, "MyRobotFunctionPackage/src")
 if !(Path_name in LOAD_PATH)
     push!(LOAD_PATH, Path_name)
 end
+
+include(joinpath(Path_name, "MyRobotFunctionPackage5.jl"))
 import .MyRobotFunctionPackage5 as MF5
-#using Plots
+
 using Makie
 using GLMakie
 using CairoMakie
 
-
-#using ColorSchemes 
-#using Plots # Get the Viridis color scheme 
-#viridis_colors = ColorSchemes.viridis(10) # Plot using the Viridis color scheme 
-#plot(rand(10), rand(10), color=viridis_colors, seriestype=:scatter)
+# File path to save plots
+parent_path = joinpath(@__DIR__, "..")
+plot_folder_path = joinpath(parent_path, "SimPlots")
 
 ##### State Transition Plots #####
     function PlotSetUp(fig, t_all, u, sw, title, xlab, ylab)
@@ -139,10 +140,9 @@ using CairoMakie
             j = sw[i]
             k = sw[i+1]
             if i%2 == 0
-                lines!(ax, t_all[j:k], u[j:k], color = linecolor, linestyle = style, linewidth = width)                #plot!(t_all[j:k], u[j:k], lc=:black, ls =:dashdot, lw = 1)
+                lines!(ax, t_all[j:k-1], u[j:k-1], color = linecolor, linestyle = style, linewidth = width)                #plot!(t_all[j:k], u[j:k], lc=:black, ls =:dashdot, lw = 1)
             elseif j != k
-                lines!(ax, t_all[j:k], u[j:k], color = linecolor, linestyle = lstyle, linewidth = lwidth)
-                #plot!(t_all[j:k], u[j:k], lc=:black, ls =:solid, lw = 2)   
+                lines!(ax, t_all[j:k-1], u[j:k-1], color = linecolor, linestyle = lstyle, linewidth = lwidth) 
             end
         end
     end
@@ -179,7 +179,7 @@ using CairoMakie
             dpi = 900,
             )
     end
-        function PlotTransitionPoints(ux,uy, title,sw)
+    function PlotTransitionPoints(ux,uy, title,sw)
         plot(ux[sw[1]+1:sw[end]], uy[sw[1]+1:sw[end]], title=title, legend=false)
         for i in 1:length(sw)-1
             j = sw[i]+1
@@ -270,7 +270,6 @@ using CairoMakie
 
 
 
-
 ##### Import Data #####
 (t_all,u_all,p) = MF5.ImportData()
 
@@ -288,7 +287,7 @@ GRF = (-p.kₛ*u_all[:,10] - p.cₛ*u_all[:,12].*(u_all[:,12].<0)).*(round.(u_al
 # Plotting Parameters
 swplot = TrimData(sw,0,9.5)
 
-cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\JavaVS-code\\CodeToTellAStory\\simulationData\\SimPlots\\")
+cd(plot_folder_path)
 ##### Subplot 1: x, y #####
 sp1 = Figure(resolution = (900, 700))
 PlotTransitionLinesColor(sp1[1,1],t_all, u_all[:,3], swplot, "", "", L"x_0 \text{, [m]}")
@@ -328,6 +327,8 @@ Makie.save("Torque_Trans.eps", sp5)
 ###### Subplot 6/7: CON MOM ######
 sp6 = PlotCycleAngularMomentum(t_all, u_all, sw, p, "", L"t \text{, [s]}", "")
 #sp7 = PlotAngularMomentum(t_all, u_all, swplot, p, "", L"t \text{, [s]}", "")
+
+sp6
 Makie.save("AngularMomentumPlot.eps", sp6)
 ##### End Subplot 6/7: CON MOM #####
 
@@ -452,58 +453,3 @@ Makie.save("Torque_SS.eps", sp15)
     sp16
     Makie.save("TragectoryPlanningExample.eps", sp16)
 ##### Subplot 16: Plotted #####
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#=
-
-##### Subplot 1: State Space #####
-p1 = PlotTransitionLines(t_all, u_all[:,1], "θ₁", sw)
-p2 = PlotTransitionLines(t_all, u_all[:,2], "θ₃", sw)
-p3 = PlotTransitionLines(t_all, u_all[:,3], "x", swplot)
-p4 = PlotTransitionLines(t_all, u_all[:,4], "y", swplot)
-p5 = PlotTransitionLines(t_all, u_all[:,5], "θ̇₁", sw)
-p6 = PlotTransitionLines(t_all, u_all[:,6], "θ̇₃", sw)
-p7 = PlotTransitionLines(t_all, u_all[:,7], "ẋ", sw)
-p8 = PlotTransitionLines(t_all, u_all[:,8], "ẏ", sw)
-sp1 = plot(p1, p2, p3, p4, p5, p6, p7, p8, layout=(2,4))
-#display(sp1)
-
-##### Subplot 2: TBD #####
-p1 = PlotTransitionPoints(u_all[:,1],u_all[:,5], "θ₁ v.s. θ̇₁",sw)
-p2 = PlotTransitionPoints(u_all[:,2],u_all[:,6], "θ₃ v.s. θ̇₃",sw)
-p3 = PlotTransitionPoints(u_all[:,3],u_all[:,4], "x v.s. y",sw)
-p4 = PlotTransitionLines(t_all, p.kₛ*u_all[:,10], "grf", sw)
-p5 = PlotTransitionPoints(u_all[:,1], u_all[:,1] + u_all[:,2], "θ₁ v.s. θ₁+θ₃", sw)
-p6 = PlotTransitionPoints(t_all, τ[1,:], "Torque, τ", sw)
-p6 = PlotTransitionPoints(t_all, τ[2,:], "Torque, τ", sw)
-sp2 = plot(p1, p2, p3, p4, p5, p6, layout=(2,3))
-#display(sp2)
-
-##### Subplot 3: Stance Controls #####
-p1 = PlotStanceGRF(t_all,u_all,p, "GRF",swstance)
-p2 = PlotStancePy(t_all,u_all,p, "Pyhid",sw)
-p3 = PlotStanceVx(t_all,u_all,p, "Vxhid",sw)
-p4 = PlotStanceVy(t_all,u_all,p, "Vyhid",sw)
-sp3 = plot(p1, p2, p3, p4, layout=(2,2))
-display(p3)
-
-##### Subplot 4: Conservation of Angular Momentum #####
-#p1 = PlotAngularMomentum(t_all,p,u_all,sw,"Angular Momentum")
-#p2 = PlotCycleAngularMomentum(t_all,p,u_all,sw,"Angular Momentum 2 Cycles")
-
-#p1 = PlotSegmentCompare(u_all[:,1],u_all[:,5], "θ₁ v.s. θ̇₁",sw)=#

@@ -1,21 +1,22 @@
 ################## Double Pendulum XLSX EXP Plotter 2.0 ##################
 
 ################### Imported Librarys ###################
-Path_name = "/Users/johna/OneDrive - Cal Poly/Documents/JULIACODE/MyRobotFunctionPackage/src"
+## Change the current working directory to the desired folder
+Path_name = joinpath(@__DIR__, "MyRobotFunctionPackage/src")
 if !(Path_name in LOAD_PATH)
     push!(LOAD_PATH, Path_name)
 end
+
+include(joinpath(Path_name, "MyRobotFunctionPackage5.jl"))
 import .MyRobotFunctionPackage5 as MF5
-#using Plots
 using Makie
 using GLMakie
 using CairoMakie
 
 
-#using ColorSchemes 
-#using Plots # Get the Viridis color scheme 
-#viridis_colors = ColorSchemes.viridis(10) # Plot using the Viridis color scheme 
-#plot(rand(10), rand(10), color=viridis_colors, seriestype=:scatter)
+# Change current directory to the specified path
+parent_path = joinpath(@__DIR__, "..\\..")
+plot_folder_path = joinpath(parent_path, "Experimental Testing\\ExpPlots")
 
 ##### State Transition Plots #####
     function PlotSetUp(fig, t_all, u, sw, title, xlab, ylab)
@@ -249,16 +250,8 @@ using CairoMakie
         H = MF5.Calculate_Angular_Momentum_All(p,u_all,sw,true)
         sp = Figure(resolution = (900, 600))
         
-        #p1 = PlotTransitionLinesColor(sp[1,1],t_all, H[1,:], swplot, title, "", L"P_x \text{, [N-s]}")
-        #p1 = yticks!([3.4, 3.3, 3.2, 3.1])
-        #p1 = ylims!((3.1,3.4))
-        #p2 = PlotTransitionLinesColor(sp[2,1],t_all, H[2,:], swplot, " ", "", L"P_y \text{, [N-s]}")
-        #p2 = yticks!([1.5, .5, -.5, -1.5])
         p3 = PlotTransitionLinesColor(sp[1,1],t_all, H[3,:], swplot, "", "", L"H_A \text{, [N-m-s]}")
         p4 = PlotTransitionLinesColor(sp[2,1],t_all, H[4,:], swplot, " ", xlab, L"H_B \text{, [N-m-s]}")
-        #p4 = yticks!([-.75, -.8, -.85])
-
-        #plot(p1, p2, p3, p4, layout=(4,1),size = (700,500),extra_plot_kwargs = KW(:include_mathjax => "cdn"))
         sp
     end
     function TrimData(sw,Start_Cycle,N_Cycles)
@@ -276,7 +269,7 @@ using CairoMakie
 
 ##### Import Data #####
 # 8-11 40 consecutive hops
-(t_all,u_all,p,τ_ff,I,θd,Id,sw,state) = MF5.ImportExpData(9)
+(t_all,u_all,p,τ_ff,I,θd,Id,sw,state) = MF5.ImportExpData("ForwardHoppingSuccessCircleHops.xlsx",9)
 
 
 # Generate some data
@@ -299,8 +292,7 @@ swplot = TrimData(sw,0.5,9.5)
 # Steady State Plotting Parameters
 swplotss = TrimData(sw,15.5,1)
 
-
-cd("C:\\Users\\johna\\OneDrive - Cal Poly\\Documents\\JavaVS-code\\CodeToTellAStory\\simulationData\\ExpPlots\\")
+cd(plot_folder_path)
 ##### Subplot 1: x, y #####
 sp1 = Figure(resolution = (900, 600))
 PlotTransitionLinesColor(sp1[1,1],avg_t(t_all), avg_u(u_all[:,3]), swplot, "", "", L"x_0 \text{, [m]}")
@@ -345,10 +337,6 @@ Makie.save("Current_Trans.eps", sp5)
     
 ##### Subplot 11: x, y #####
 
-
-#p1 = PlotSetUp(t_all, u_all[:,7], p.Vxhipd, swplotss, "" ,""         ,L"\dot{x}_0 \text{, [m/s]}")
-#p1 = PlotVx!(t_all, u_all[:,7], swplotss,p)
-#p1 = TransitionColor!(t_all, u_all[:,7], swplotss)
 
 
 ##### Subplot 13: θ₁, θ₃, θ̇₁, θ̇₃ #####
@@ -425,7 +413,7 @@ ax.yticks = [-2, 0, 2]
 
 ax = PlotTransitionLinesColor(sp8[9,1], t_all, state[:,1], swplotss, " " ,L"t \text{, [s]}", L"state")
 ax.yticks = [-2, 0, 2]
-legend!(sp8[9,1], ["State"])
+#legend!(sp8[9,1], ["State"])
 
 sp8
 
