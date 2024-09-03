@@ -15,8 +15,8 @@ Links to Julia derivation code.
 - [Modeling Triple Inverted Pendulum](Modeling/Modeling%20Software/SymPy%20Triple%20Pendulum%20Derivation.jl)
 
 Links to derivation text files. The Equations are written to be easily copied and pasted into code.
-- [Flight Equation](Modeling/Model%20Equasions/Flight.txt)
-- [Stance Equation](Modeling/Model%20Equasions/Stance.txt)
+- [Flight Equation](Modeling/Model%20Equasions/Flight.txt) for Julia
+- [Stance Equation](Modeling/Model%20Equasions/Stance.txt) for Julia
 - Inverted Pendulum Equation
   - [Generic Form](Modeling/Model%20Equasions/InvertedPendulum1.txt)
   - [For Matlab](Modeling/Model%20Equasions/InvertedPendulum2.txt)
