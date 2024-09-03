@@ -15,8 +15,8 @@ Links to Julia derivation code.
 - [Modeling Triple Inverted Pendulum](Modeling/Modeling%20Software/SymPy%20Triple%20Pendulum%20Derivation.jl)
 
 Links to derivation text files. The Equations are written to be easily copied and pasted into code.
-- [Flight Equation](Modeling/Model%20Equasions/Flight.txt) for Julia
-- [Stance Equation](Modeling/Model%20Equasions/Stance.txt) for Julia
+- [Flight Equation](Modeling/Model%20Equasions/Flight.txt)
+- [Stance Equation](Modeling/Model%20Equasions/Stance.txt)
 - Inverted Pendulum Equation
   - [Generic Form](Modeling/Model%20Equasions/InvertedPendulum1.txt)
   - [For Matlab](Modeling/Model%20Equasions/InvertedPendulum2.txt)
@@ -72,16 +72,11 @@ Experimental Software
 </p>
 
 Experimental Data Analysis
-- [Experimental Plotting](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20EXP%20Plotter%202.0.jl): Uses experimental data to plot key variables during a simulation.
-- [Parameter Sweep Plot](Simulation/Simulation%20Software/Sim%20Goal%20XLSX%20Plotter%201.0.jl): Same parameter sweep code as the simulation but uses experimental data.
+- [Plotting](Simulation/Simulation%20Software/Double%20Pendulum%20XLSX%20EXP%20Plotter%202.0.jl): Graphs experimental data as a .jpg and .eps.
+- [Parameter Sweep Plot](Simulation/Simulation%20Software/Sim%20Goal%20XLSX%20EXP%20Plotter%201.0.jl): Plots data used for tuning horizontal speed, similar to the simulation parameter sweep plot.
 
 <p align="center">
   <img width="600" height="400" src="Experimental%20Testing/ExpPlots/HipPosition_Trans.png">
 </p>
 
 **<p align= "center">Experimental Hip Position Transient Response</p>**
-
-
-
-
-
