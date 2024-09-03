@@ -265,7 +265,7 @@ plot_folder_path = joinpath(parent_path, "SimPlots")
 
 
 ##### Import Data #####
-(t_all,u_all,p) = MF5.ImportData()
+(t_all,u_all,p) = MF5.ImportData("CurrentDataset.xlsx")
 
 (value, index) = findmax(u_all[:,4])
 #index = 1
@@ -306,7 +306,7 @@ sp3
 Makie.save("AngularPosition_Trans.png", sp3)
 
 ##### Subplot 4: GRF #####
-sp4 = Figure(resolution = (900, 600))
+sp4 = Figure(resolution = (900, 400))
 PlotTransitionLinesColor(sp4[1,1], t_all, GRF, swplot, "",L"t \text{, [s]}", L"R_{y}, \text{ [N]}")
 sp4
 Makie.save("GRF_Trans.png", sp4)
@@ -420,7 +420,7 @@ sp13
 Makie.save("AngularPosition_SS.png", sp13)
 
 ##### Subplot 14: GRF #####
-sp14 = Figure(resolution = (900, 600))
+sp14 = Figure(resolution = (900, 400))
 PlotTransitionLinesColor(sp14[1,1], t_all, GRF, swplotss, "",L"t \text{, [s]}", L"R_{y} \text{, [N]}")
 sp14
 Makie.save("GRF_SS.png", sp14)
